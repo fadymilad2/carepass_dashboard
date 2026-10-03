@@ -46,3 +46,6 @@ app.*.map.json
 
 # Local pre-refactor source snapshots
 .refactor-backups/
+
+# Local Firebase build configuration
+/firebase.local.json

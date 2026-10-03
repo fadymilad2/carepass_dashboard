@@ -17,6 +17,11 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
+      if (web.apiKey.isEmpty) {
+        throw StateError(
+          'Missing FIREBASE_WEB_API_KEY. Run or build with --dart-define-from-file=firebase.local.json.',
+        );
+      }
       return web;
     }
     switch (defaultTargetPlatform) {
@@ -53,7 +58,7 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyAUVVF_W9-AoV87slZJshD8OZRZlLced0k',
+    apiKey: String.fromEnvironment('FIREBASE_WEB_API_KEY'),
     appId: '1:375138173967:web:18ab85e4913ac974524f7a',
     messagingSenderId: '375138173967',
     projectId: 'carepass-b0220',

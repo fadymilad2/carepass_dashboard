@@ -87,6 +87,15 @@ flutterfire configure --project=YOUR_FIREBASE_PROJECT_ID --platforms=web
 
 The environment needs Firebase Authentication, Firestore, Storage, and the corresponding shared backend functions and rules. Use a dedicated development environment when testing catalog changes or account management.
 
+
+### Firebase browser key
+
+Copy `firebase.example.json` to `firebase.local.json` and set `FIREBASE_WEB_API_KEY` to your restricted dashboard browser key. The local file is ignored by Git; CI should supply the same build definition from its configuration. The app reports a startup error when the value is missing.
+
+The production key is restricted to the project's Firebase Hosting domains and local development origins, with an allowlist for Firebase Authentication, tokens, installations, messaging registration, Firestore, Storage, and App Check. It cannot call the Gemini API. If you add a hosting domain, update the key's referrer restrictions before deploying there.
+
+Firebase browser keys remain visible in compiled web apps. Build-time configuration keeps project values out of source control; the key restrictions and backend authorization provide the security controls. See [Firebase API key guidance](https://firebase.google.com/docs/projects/api-keys). Running FlutterFire configuration again can overwrite `firebase_options.dart`; preserve the `String.fromEnvironment('FIREBASE_WEB_API_KEY')` setting.
+
 ### 3. Configure administrator access
 
 Sign-in uses Firebase Authentication email/password accounts. The authenticated UID must also have an existing, active document at `admin_users/{uid}`. Provision initial access through the project's trusted administration process.
@@ -100,7 +109,7 @@ Navigation and UI permission checks support the user experience; authorization m
 ### 4. Start the dashboard
 
 ```sh
-flutter run -d chrome
+flutter run -d chrome --dart-define-from-file=firebase.local.json
 ```
 
 Sign in with your configured administrator account. The sections available to that account depend on its stored permissions.
@@ -157,7 +166,7 @@ Page-specific widgets and BLoC event/state files may use Dart `part` directives.
 ```sh
 flutter analyze
 flutter test
-flutter build web --release
+flutter build web --release --dart-define-from-file=firebase.local.json
 ```
 
 Tests cover reporting, notification handling, provider categories, and regression cases. Fake-Firestore tests do not verify deployed security rules, actual image uploads, or push delivery. Check those integrations against the intended development backend as well.
@@ -167,7 +176,7 @@ Tests cover reporting, notification handling, provider categories, and regressio
 Create the web build:
 
 ```sh
-flutter build web --release
+flutter build web --release --dart-define-from-file=firebase.local.json
 ```
 
 Output is written to `build/web`. [firebase.json](firebase.json) serves this directory and rewrites application routes to `index.html`.
