@@ -1,0 +1,53 @@
+name: carepass_dashboard
+description: CarePass Admin Dashboard
+publish_to: none
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.11.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # Firebase
+  firebase_core: ^4.9.0
+  firebase_auth: ^6.5.1
+  cloud_firestore: ^6.4.1
+  cloud_functions: ^6.3.1
+  firebase_storage: ^13.4.1
+  firebase_messaging: ^16.2.2
+
+  # State Management
+  flutter_bloc: ^9.1.1
+  equatable: ^2.0.5
+
+  # DI
+  get_it: ^9.2.1
+
+  # Navigation
+  go_router: ^17.2.3
+
+  # UI
+  google_fonts: ^8.1.0
+  fl_chart: ^1.2.0
+  data_table_2: ^2.5.12
+
+  # Utils
+  intl: ^0.20.2
+  uuid: ^4.4.0
+  dartz: ^0.10.1
+  file_picker: ^11.0.2
+  cached_network_image: ^3.3.1
+  csv: ^8.0.0
+  web: ^1.1.1
+  image_picker: ^1.2.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+  fake_cloud_firestore: ^4.3.0
+
+flutter:
+  uses-material-design: true
